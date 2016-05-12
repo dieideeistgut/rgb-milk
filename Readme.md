@@ -22,6 +22,7 @@ Ideas and such from:
 * [ryupold/rgb-pi](https://github.com/ryupold/rgb-pi)
 * [BenjaminDieter/rgb-pi-client-ionic](https://github.com/BenjaminDieter/rgb-pi-client-ionic)
 * [BenjaminDieter/rgb-pi-js](https://github.com/BenjaminDieter/rgb-pi-js)
+* [BenjaminDieter/rgb-pi-client-ionic](https://github.com/BenjaminDieter/rgb-pi-client-ionic)
 
 ---
 
