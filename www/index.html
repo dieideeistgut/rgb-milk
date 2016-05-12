@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/ionic-color-picker/dist/ionic-color-picker.min.css">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-color-picker/dist/ionic-color-picker-tinycolor.min.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+  </head>
+  <body ng-app="milk" ng-controller="milkController">
+
+  <div class="bar bar-header bar-dark">
+    <h1 class="title">RGBmilk</h1>
+  </div>
+
+  <ion-content class="has-header" padding="true">
+
+    <div class="list" id="targetbox" style="display:none;">
+      <div class="item item-divider">
+        Target
+      </div>
+      <label class="item item-input">
+        <input type="text" value="http://192.168.2.114:4321">
+      </label>
+    </div>
+
+    <div class="list" ng-show="ShowInitList">
+
+      <div class="item item-divider">
+        Color-Swatches
+      </div>
+
+      <ul class="list color-list-demo">
+        <li class="item dark">
+          Swatch 1
+          <button id="colorSwatch1" class="color-demo light-bg light-border" color-picker="" ng-model="colorSwatch1" modal-title="Farbe wählen" color-box="{{colorSwatch1}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch1}}"></button>
+        </li>
+        <li class="item dark">
+          Swatch 2
+          <button id="colorSwatch2" class="color-demo light-bg light-border" color-picker="" ng-model="colorSwatch2" modal-title="Farbe wählen" color-box="{{colorSwatch2}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch2}}"></button>
+        </li>
+        <li class="item dark">
+          Swatch 3
+          <button id="colorSwatch3" class="color-demo light-bg light-border" color-picker="" ng-model="colorSwatch3" modal-title="Farbe wählen" color-box="{{colorSwatch3}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch3}}"></button>
+        </li>
+        <li class="item dark">
+          Swatch 4
+          <button id="colorSwatch4" class="color-demo light-bg light-border" color-picker="" ng-model="colorSwatch4" modal-title="Farbe wählen" color-box="{{colorSwatch4}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch4}}"></button>
+        </li>
+      </ul>
+
+      <div class="item item-divider">
+        Brightness
+      </div>
+
+      <div class="item range range-calm">
+        <i class="icon ion-ios-sunny"></i>
+        <input type="range" name="fadeRange" min="0" max="100" value="100" ng-value="100" ng-model="$parent.fadeRange">
+        <i class="icon ion-ios-sunny-outline"></i>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button class="button button-light button-center" ng-click="switchCmd('switch')">Switch</button>
+        </div>
+        <div class="col">
+          <button class="button button-light button-center" ng-click="switchCmd('fade')">Fade</button>
+        </div>
+        <div class="col">
+          <button class="button button-light button-center" ng-click="saveColors()">Save</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="button button-light button-center" ng-click="enterCmd()">Custom Command</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="button button-light button-center" ng-click="allOffCmd()">Alles aus</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="list" id="cmdbox" ng-show="ShowCmdList">
+      <div class="item item-divider">
+        Command
+      </div>
+      <label class="item item-input">
+        <textarea placeholder="Command" rows="10" ng-model="$parent.cmdString"></textarea>
+      </label>
+
+      <div class="item item-divider">
+        Recent 5
+      </div>
+      <ion-list>
+        <ion-item class="item" ng-repeat="command in commands" ng-click="updateCmdString({{command}})">
+          {{command}}
+        </ion-item>
+      </ion-list>
+
+      <div class="row">
+        <div class="col">
+          <button class="button button-stable button-center" ng-click="cancelCmd()">Abbrechen</button>
+        </div>
+        <div class="col">
+          <button class="button button-light button-center" ng-click="submitCmd()">Command senden</button>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </ion-content>
+
+  </body>
+</html>
