@@ -6,6 +6,7 @@ platforms/
 plugins/
 coverage/
 www/lib
+resources/
 
 .idea
 .temp
