@@ -29,17 +29,17 @@
   <body ng-app="milk" ng-controller="milkController">
 
   <div class="bar bar-header bar-dark">
-    <h1 class="title">RGBmilk</h1>
+    <h1 class="title">RGB<span>milk</span></h1>
   </div>
 
   <ion-content class="has-header" padding="true">
 
-    <div class="list" id="targetbox" style="display:none;">
+    <div class="list" id="targetbox" ng-show="ShowTarget">
       <div class="item item-divider">
         Target
       </div>
-      <label class="item item-input">
-        <input type="text" value="http://192.168.2.114:4321">
+      <label class="item item-input with-shaddow">
+        <input type="text" value="" ng-model="$parent.httpTarget" ng-change="changeTarget(httpTarget)" name="httpTarget">
       </label>
     </div>
 
@@ -49,22 +49,22 @@
         Color-Swatches
       </div>
 
-      <ul class="list color-list-demo">
+      <ul class="list with-shaddow">
         <li class="item dark">
-          Swatch 1
-          <button id="colorSwatch1" class="color-demo light-bg light-border" color-picker="" ng-model="colorSwatch1" modal-title="Farbe wählen" color-box="{{colorSwatch1}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch1}}"></button>
+          Color 1
+          <button id="colorSwatch1" class="color-swatch light-bg light-border" color-picker="" ng-model="colorSwatch1" modal-title="Farbe wählen" color-box="{{colorSwatch1}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch1}}" ng-change="changeSwatch(colorSwatch1,'color1')"></button>
         </li>
         <li class="item dark">
-          Swatch 2
-          <button id="colorSwatch2" class="color-demo light-bg light-border" color-picker="" ng-model="colorSwatch2" modal-title="Farbe wählen" color-box="{{colorSwatch2}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch2}}"></button>
+          Color 2
+          <button id="colorSwatch2" class="color-swatch light-bg light-border" color-picker="" ng-model="colorSwatch2" modal-title="Farbe wählen" color-box="{{colorSwatch2}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch2}}" ng-change="changeSwatch(colorSwatch2,'color2')"></button>
         </li>
         <li class="item dark">
-          Swatch 3
-          <button id="colorSwatch3" class="color-demo light-bg light-border" color-picker="" ng-model="colorSwatch3" modal-title="Farbe wählen" color-box="{{colorSwatch3}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch3}}"></button>
+          Color 3
+          <button id="colorSwatch3" class="color-swatch light-bg light-border" color-picker="" ng-model="colorSwatch3" modal-title="Farbe wählen" color-box="{{colorSwatch3}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch3}}" ng-change="changeSwatch(colorSwatch3,'color3')"></button>
         </li>
         <li class="item dark">
-          Swatch 4
-          <button id="colorSwatch4" class="color-demo light-bg light-border" color-picker="" ng-model="colorSwatch4" modal-title="Farbe wählen" color-box="{{colorSwatch4}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch4}}"></button>
+          Color 4
+          <button id="colorSwatch4" class="color-swatch light-bg light-border" color-picker="" ng-model="colorSwatch4" modal-title="Farbe wählen" color-box="{{colorSwatch4}}" ok-button="OK" cancel-button="Abbrechen" modal-class="" color-mode="rgb" model-mode="rgb" header-footer-class="bar-dark" value="{{colorSwatch4}}" ng-change="changeSwatch(colorSwatch4,'color4')"></button>
         </li>
       </ul>
 
@@ -72,31 +72,26 @@
         Brightness
       </div>
 
-      <div class="item range range-calm">
+      <div class="item range range-calm with-shaddow">
         <i class="icon ion-ios-sunny"></i>
-        <input type="range" name="fadeRange" min="0" max="100" value="100" ng-value="100" ng-model="$parent.fadeRange">
+        <input type="range" name="fadeRange" min="0" max="100" value="100" ng-value="100" ng-model="$parent.fadeRange" ng-change="changeDim(fadeRange)">
         <i class="icon ion-ios-sunny-outline"></i>
       </div>
 
-      <div class="row">
+      <div class="row" style="margin: 16px 0 0 0;">
         <div class="col">
-          <button class="button button-light button-center" ng-click="switchCmd('switch')">Switch</button>
+          <button class="button button-light button-center with-shaddow" ng-click="switchCmd('switch')">Switch</button>
         </div>
         <div class="col">
-          <button class="button button-light button-center" ng-click="switchCmd('fade')">Fade</button>
+          <button class="button button-light button-center with-shaddow" ng-click="switchCmd('fade')">Fade</button>
         </div>
         <div class="col">
-          <button class="button button-light button-center" ng-click="saveColors()">Save</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button class="button button-light button-center" ng-click="enterCmd()">Custom Command</button>
+          <button class="button button-light button-center with-shaddow" ng-click="allOffCmd()">Off</button>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <button class="button button-light button-center" ng-click="allOffCmd()">Alles aus</button>
+          <button class="button button-light button-center with-shaddow" ng-click="enterCmd()">Custom Command</button>
         </div>
       </div>
 
@@ -121,13 +116,12 @@
 
       <div class="row">
         <div class="col">
-          <button class="button button-stable button-center" ng-click="cancelCmd()">Abbrechen</button>
+          <button class="button button-stable button-center" ng-click="cancelCmd()">Cancel</button>
         </div>
         <div class="col">
-          <button class="button button-light button-center" ng-click="submitCmd()">Command senden</button>
+          <button class="button button-light button-center" ng-click="submitCmd()">Send</button>
         </div>
       </div>
-
 
     </div>
 

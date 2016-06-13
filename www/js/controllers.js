@@ -1,11 +1,24 @@
 angular.module('milk.controllers', [])
 
-.controller('milkController', function($scope, Settings, $ionicPopup) {
+.config(function ($stateProvider, $httpProvider, $urlRouterProvider) {
+  // We need to setup some parameters for http requests
+  // These three lines are all you need for CORS support
+  $httpProvider.defaults.useXDomain = true;
+  $httpProvider.defaults.withCredentials = false;
+  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
+})
+
+.controller('milkController', function($scope, Settings, $ionicPopup, $http) {
 
   $scope.ShowInitList = true;
-  $scope.ShowCmdList = false;
+  $scope.ShowCmdList  = false;
+  $scope.ShowTarget   = true;
 
-  $scope.fadeRange    = 100;
+  $scope.fadeRange    = Settings.getDim();
+
+  $scope.httpTarget   = Settings.getTarget();
+
   $scope.commands     = Settings.getAllCommands();
 
   $scope.cmdString    = Settings.getCommand();
@@ -38,12 +51,33 @@ angular.module('milk.controllers', [])
     sendCmd("http://192.168.2.114:4321", angular.fromJson({"commands":[{"type":"cc","color":"{f:0,0,0}"}]}), "allOffCmd()");
   }
 
+  $scope.changeDim = function(input){
+    console.log("updateDim: " + input);
+    updateDim(input);
+  }
+
+  $scope.changeTarget = function(input){
+    console.log("updateTarget: " + input);
+    updateTarget(input);
+  }
+
+  $scope.changeSwatch = function(input,color){
+    input = angular.toJson(input);
+    console.log("changeSwatchNr: " + color + " to: " + input);
+    updateColor(input, color);
+    $scope.colorSwatch1 = Settings.getColor('color1');
+    $scope.colorSwatch2 = Settings.getColor('color2');
+    $scope.colorSwatch3 = Settings.getColor('color3');
+    $scope.colorSwatch4 = Settings.getColor('color4');
+  }
+
+
   $scope.switchCmd = function(type){
 
     // Custom popup
       var myPopup = $ionicPopup.show({
        templateUrl: 'templates/swatchchooser.html',
-       title: 'Welche Swatch?',
+       title: 'Select color',
        scope: $scope,
 
        buttons: [
@@ -64,12 +98,9 @@ angular.module('milk.controllers', [])
     myPopup.then(function(res) {
       console.log('Tapped!', res);
 
-      var color = angular.fromJson(angular.element(jQuery(res)).val());
+      var color = angular.fromJson(res);
       var dim   = $scope.fadeRange;
-      if(!dim){
-        var dim = 100;
-      }
-
+      dim = parseInt(angular.fromJson(dim));
       dim = (dim / 100)
 
       var mixedRed    = ( ( (1 / 255) * color.r * dim).toFixed(4) );
@@ -86,6 +117,8 @@ angular.module('milk.controllers', [])
         sendCmd("http://192.168.2.114:4321", angular.fromJson({"commands":[{"type":"fade","time":"1.25","end":"{f:"+mixedRed+","+mixedGreen+","+mixedBlue+"}"}]}), "switchCmd(fade)");
       }
 
+      console.log(mixedRed+","+mixedGreen+","+mixedBlue);
+
     });
 
   }
@@ -93,21 +126,6 @@ angular.module('milk.controllers', [])
   $scope.updateCmdString = function(commandString){
     console.log(commandString);
     $scope.cmdString = angular.toJson(commandString);
-  }
-
-  $scope.saveColors = function(){
-    var col1 = angular.element(jQuery('#colorSwatch1')).val();
-    var col2 = angular.element(jQuery('#colorSwatch2')).val();
-    var col3 = angular.element(jQuery('#colorSwatch3')).val();
-    var col4 = angular.element(jQuery('#colorSwatch4')).val();
-    console.log("updateColor1: " + col1);
-    console.log("updateColor2: " + col2);
-    console.log("updateColor3: " + col3);
-    console.log("updateColor4: " + col4);
-    updateColor(col1, "color1");
-    updateColor(col2, "color2");
-    updateColor(col3, "color3");
-    updateColor(col4, "color4");
   }
 
   var updateCommand = function(commandString) {
@@ -123,25 +141,28 @@ angular.module('milk.controllers', [])
     Settings.saveColor(newColor, num);
   }
 
+  var updateDim = function(dim) {
+    var newDim = Settings.newDim(dim);
+    Settings.saveDim(dim);
+  }
+
+  var updateTarget = function(target) {
+    var newTarget = Settings.newTarget(target);
+    Settings.saveTarget(target);
+  }
+
 	function sendCmd(rpitarget, rpicmd, msg){
 
-		console.log('SUB >> ' + rpicmd);
+		console.log('SUB (target) \t\t\t >> ' + rpitarget);
+		console.log('SUB (message) \t\t >> ' + msg);
+		console.log('SUB (command) \t >> ' + JSON.stringify(rpicmd));
 
-		$.ajax({
-	    url: rpitarget,
-	    type: 'POST',
-	    dataType: 'json',
-	    async: false,
-	    contentType: 'application/x-www-form-urlencoded',
-	    processData: false,
-	    data: JSON.stringify(rpicmd),
-	    success: function (data) {
-				console.log('SUB <<  ' + JSON.stringify(data));
-	    },
-	    error: function(){
-				console.log('SUB <<: ERR');
-	    }
-		});
+    $http.post(rpitarget,JSON.stringify(rpicmd)).success(function(response, status, headers, config){
+      console.log('SUB (success) \t\t <<  ' + JSON.stringify(response));
+    }).error(function(err, status, headers, config){
+      console.log('SUB (error) \t\t << ' + JSON.stringify(err));
+    });
+
 	}
 
 

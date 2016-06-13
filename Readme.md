@@ -9,11 +9,18 @@ This little thingy sends commands to a [rgb-pi](https://github.com/ryupold/rgb-p
 
 ---
 
-Everything is buggy and alpha. IOS Build runs though - just not sending commands because i
+~~Everything is buggy and alpha. IOS Build runs though - just not sending commands because i
 think i didn't use Angular calls but jQuery ones. Yes that's cheap n buggy but makes me
-able to use it locally on my raspberry to control my lightbars for the moment.
+able to use it locally on my raspberry to control my lightbars for the moment. Will be fixed.~~
 
-Will be fixed.
+* Changed stuff to use angular calls
+* Changed stuff to look useable
+* Changed localStorage methods so they become persistent on device
+* Added X-Origin stuff so it acually works
+* Updated images
+* Massive log-changes so debugging works with at least a bit of sense
+* Dim-Value now saved
+* Target-Value actually saved
 
 ---
 

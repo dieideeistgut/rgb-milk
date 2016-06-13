@@ -26,21 +26,21 @@ angular.module('milk', ['ionic', 'ionic-color-picker', 'milk.controllers', 'milk
 .factory('Settings', function() {
   return {
     getCommand: function() {
-      var commandString = window.localStorage['commands'];
+      var commandString = localStorage.getItem('commands');
       if(commandString) {
         return angular.fromJson(commandString)[0];
       }
       return [];
     },
     getAllCommands: function() {
-      var commandString = window.localStorage['commands'];
+      var commandString = localStorage.getItem('commands');
       if(commandString) {
         return angular.fromJson(commandString);
       }
       return [];
     },
     saveCommand: function(command) {
-      var commands = angular.fromJson(window.localStorage['commands']);
+      var commands = angular.fromJson(localStorage.getItem('commands'));
       if(!commands){
         commands = Array();
       }
@@ -52,7 +52,7 @@ angular.module('milk', ['ionic', 'ionic-color-picker', 'milk.controllers', 'milk
         commands.unshift(command);
       }
 
-      window.localStorage['commands'] = angular.toJson(commands);
+      localStorage.setItem('commands',angular.toJson(commands));
     },
 
     newCommand: function(commandString) {
@@ -60,17 +60,45 @@ angular.module('milk', ['ionic', 'ionic-color-picker', 'milk.controllers', 'milk
     },
 
     getColor: function(num){
-      var colorArray = window.localStorage[num];
+      var colorArray = localStorage.getItem(num);
       if(colorArray){
         return angular.fromJson(colorArray);
       }
       return "{\"r\":128,\"g\":128,\"b\":128,\"a\":1}";
     },
     saveColor: function(color, num) {
-      window.localStorage[num] = angular.toJson(color);
+      localStorage.setItem(num,angular.toJson(color));
     },
     newColor: function(colorString) {
       return colorString
+    },
+
+    getDim: function(){
+      var dimValue = localStorage.getItem('dim');
+      if(dimValue){
+        return dimValue;
+      }
+      return 100;
+    },
+    saveDim: function(dim) {
+      localStorage.setItem('dim',angular.toJson(dim));
+    },
+    newDim: function(dimString) {
+      return dimString
+    },
+
+    getTarget: function(){
+      var targetValue = localStorage.getItem('target');
+      if(targetValue){
+        return targetValue;
+      }
+      return 'http://192.168.2.114:4321';
+    },
+    saveTarget: function(target) {
+      localStorage.setItem('target',target);
+    },
+    newTarget: function(targetString) {
+      return targetString;
     }
   }
 });

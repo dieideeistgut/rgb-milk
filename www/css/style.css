@@ -1,7 +1,65 @@
 /* Empty. Add your own CSS if you like */
 
 body{
-  background: #f2f2f2;
+  background: url(../img/wall.png);
+  background-size: cover;
+}
+
+.bar.bar-dark{
+  background: rgba(0, 0, 0, 0.21);
+  border: none;
+}
+.bar.bar-dark h1{
+  color: rgba(255, 255, 255, 1) !important;
+  text-shadow: 0px 2px 4px rgba(11, 11, 11, 0.4);
+  text-transform: uppercase;
+  font-size: 24px;
+  line-height: 1.75;
+  font-weight: 200;
+}
+.bar.bar-dark h1 span{
+  color: rgba(255, 255, 255, 1) !important;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+.item-divider{
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.2);
+  font-size: .7em;
+  line-height: 1;
+  text-transform: uppercase;
+  min-height: 0;
+  color: rgba(204, 204, 204, 0.79) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.with-shaddow{
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.20);
+  z-index: 3;
+  overflow: hidden;
+}
+
+.item{
+  background: transparent;
+}
+.list .list .item{
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+label.with-shaddow,
+.item.with-shaddow{
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+input[type="text"],
+.icon{
+  color: white;
 }
 
 .button-center{
@@ -9,14 +67,32 @@ body{
   margin-right: 16px;
 }
 
-.color-demo {
-float: right;
-  width: 20px;
-  height: 20px;
+.item-radio .radio-icon{
+  color: #444;
+}
+
+.button{
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4) !important;
+  background: -webkit-linear-gradient(rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 100%) !important;
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: 600;
+  color: #777 !important;
+}
+
+.color-swatch {
+  float: right;
+  width: 30px;
+  height: 30px;
   position: relative;
   border-width: 0px;
+  top: -5px;
   border-style: solid;
-  border-radius: 4px;
+  border-radius: 15px;
   background: #eee;
   font-size: 10px;
+  margin-bottom: -10px;
+  border: 2px solid white !important;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.20);
 }
