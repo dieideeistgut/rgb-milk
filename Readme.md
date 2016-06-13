@@ -3,9 +3,9 @@
 
 This little thingy sends commands to a [rgb-pi](https://github.com/ryupold/rgb-pi) server. The screenshot should be clear:
 
-![RGB-Milk Screenshot](screen1.png?raw=true "RGB-Milk Screenshot")
+![RGB-Milk Screenshot](screen1.png?raw=true&v=2 "RGB-Milk Screenshot")
 
-![RGB-Milk Screenshot](screen2.png?raw=true "RGB-Milk Screenshot")
+![RGB-Milk Screenshot](screen2.png?raw=true&v=2 "RGB-Milk Screenshot")
 
 ---
 
